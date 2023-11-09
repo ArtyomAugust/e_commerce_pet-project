@@ -1,0 +1,16 @@
+{
+    "name": "user/pet_project_artjoms_ustinovs",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Modules\\": "src/Modules"
+        }
+    },
+    "authors": [
+        {
+            "name": "Artyom Ustinov",
+            "email": "artyomustinov@gmail.com"
+        }
+    ],
+    "require": {}
+}
