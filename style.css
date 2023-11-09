@@ -2,6 +2,7 @@
 /* @import "./node_modules/bootstrap/scss/bootstrap"; */
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+@import url('https://fontawesome.com/icons/magnifying-glass?f=classic&s=solid');
 *{
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -14,7 +15,7 @@
 body{
     margin: 0;
     font-family: 'Roboto', sans-serif;
-     background-color: #ffd300;
+     background-color: #b3a97c;
 }
 
 /* navbar */
@@ -193,11 +194,35 @@ aside{
     margin-right: 1cm;
     border: 5px solid ;
     float: left;
+    background: beige;
 }
+
+aside div.label {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
 /* nav */
 
 nav.input {
     margin-top: 40px;
+    margin-bottom: 40px;
+    display: block;
+    margin-left: 30%;
+}
+
+nav input[type=button] {
+	appearance: none;
+	border: .2em solid #E91E63;
+	background: hsl(0 0 0/0);
+	padding: .85em 1.5em;
+	color: #E91E63;
+	border-radius: 2em;
+	transition: 1s;
+	&:hover, &:focus, &:active {
+		background: #E91E63;
+		color: #fff;
+	}
 }
 
 nav input[type = "text"]{
@@ -213,6 +238,40 @@ nav input[type = "text"]{
 }
 aside div.content-filter{
     padding: 20px;
+}
+
+/* Style the search field */
+form.myInputForm input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 50%;
+  background: #f1f1f1;
+}
+
+/* Style the submit button */
+form.myInputForm button {
+  float: left;
+  width: 4%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none; /* Prevent double borders */
+  cursor: pointer;
+}
+
+form.myInputForm button:hover {
+  background: #0b7dda;
+}
+
+/* Clear floats */
+form.myInputForm::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 /* Products */

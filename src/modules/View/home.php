@@ -1,7 +1,7 @@
 <?php include($base_path . 'src\\modules\\view\\__header.inc.php'); ?>
-<?php if (isset($_POST['findProduct'])) {
-            $valueInput = $_POST['findProduct'];
-        } ?>
+<?php if (!empty($_POST['findProduct'])) {
+  echo $valueInput = $_POST['findProduct'];
+} ?>
 <!------------------------navbar------------------------>
 
 <header id="navbar">
@@ -28,24 +28,27 @@
 <!------------------------navbar------------------------>
 
 <nav class="input">
-  <form id="myInputForm" action="" method="post">
-  <input 
+  <form id="myInputForm" class="myInputForm" method="post">
+    <input 
     type="text" 
-    name="findProduct" 
-    id="search-bar" 
-    value=""
-    placeholder="Type a product">
-    <input type="button" value="Search">
+    placeholder="Search.." 
+    value="" 
+    id="search-bar"
+    name="findProduct">
+    <button type="submit"><i class="bi bi-search"></i></button>
   </form>
+
+
 </nav>
 
 <!-- Filter -->
 <aside>
   <form action="" method="post">
     <div class="content-filter">
-      <div class="labe">
+      <div class="label">
         <h1 style="text-align: center;">Filter</h1>
       </div>
+      <div style="border-style: dotted; border-width: 2px;"></div>
       <div id="filterCheckbox" class="checkbox"></div>
     </div>
   </form>
@@ -59,40 +62,39 @@
   import createGrid from "./src/js/createGrid.js";
   import filter from "./src/js/filter.js";
   import fetchWFilter from "./src/js/fetchWFilter.js";
-  
 
 
   const dataFPHP = <?php echo $context; ?>;
   console.log(dataFPHP);
 
   const fromInput = document.querySelector("#search-bar");
-    
-    console.log(fromInput.value.length);
 
-    if (fromInput.value.length == 0 ) {
-      try {
-        filter(dataFPHP);
-        createGrid(dataFPHP);
-        fetchWFilter(dataFPHP);
-      } catch (e) {
-        console.log(e, 'do not work');
-      }
-            
+  console.log(fromInput.value.length);
+
+  if (fromInput.value.length == 0) {
+    try {
+      filter(dataFPHP);
+      createGrid(dataFPHP);
+      fetchWFilter(dataFPHP);
+    } catch (e) {
+      console.log(e, 'do not work');
     }
 
-    fromInput.addEventListener("keypress", (e) => {
-        // e.preventDefault();
-        // console.log(e.key);
-        if (e.key === 'Enter') {
-            // console.log(fromInput.value);
-            let searchBar = fromInput.value;
+  }
 
-                filter(dataFPHP);
-                createGrid(dataFPHP);
-                fetchWFilter(dataFPHP);
-           
-        }
-    }); 
+  fromInput.addEventListener("keypress", (e) => {
+    // e.preventDefault();
+    // console.log(e.key);
+    if (e.key === 'Enter') {
+      // console.log(fromInput.value);
+      let searchBar = fromInput.value;
+
+      filter(dataFPHP);
+      createGrid(dataFPHP);
+      fetchWFilter(dataFPHP);
+
+    }
+  }); 
 </script>
 
 

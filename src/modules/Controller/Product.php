@@ -6,12 +6,13 @@ use Modules\Model\DB as DB;
 class Product extends BaseController
 {
     function show()
-    {   $post = '';
-        
-        if (isset($_POST['myInputForm'])) {
-            $post = $_POST['myInputForm'];
+    {
+        $post = '';
+
+        if (!empty($_POST['findProduct'])) {
+            $post = $_POST['findProduct'];
         }
-        
+
         $sql = "SELECT products.id as id, 
                 products.label as label, 
                 products.photo_name as photo_name, 
