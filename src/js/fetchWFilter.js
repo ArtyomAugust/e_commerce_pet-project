@@ -1,5 +1,5 @@
     
-import createGrid from './createGrid.js';
+import {createGridFHome} from './createGrid.js';
 
 function fetchWFilter(dataFServe) {
     let clusterFFilter = [];

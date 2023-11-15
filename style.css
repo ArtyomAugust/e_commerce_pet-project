@@ -314,7 +314,7 @@ a
 }
 
 .product-details {
-    padding: 30px;
+    padding: 15px;
 }
 
 .product-catagory {
@@ -351,6 +351,9 @@ a
     overflow: hidden;
     border-top: 1px solid #eee;
     padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 15px;
 }
 
 .product-bottom-details div {
@@ -584,6 +587,258 @@ a
     }
   
   }
+
+  /* Login */
+
+  * { box-sizing: border-box; margin: 0; padding:0; }
+
+html {
+  
+  .login-wrap {
+    position: relative;
+    margin: 0 auto;
+    background: #ecf0f1;
+    width: 350px;
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px #333;
+    padding: 15px;
+    
+    h2 {
+      text-align: center;
+      font-weight: 200;
+      font-size: 2em;
+      margin-top: 10px;
+      color: #34495e;
+    }
+    
+    .form {
+      padding-top: 20px;
+      
+      input[type="text"],
+      input[type="password"],
+      button {
+        width: 80%;
+        margin-left: 10%;
+        margin-bottom: 25px;
+        height: 40px;
+        border-radius: 5px;
+        outline: 0;
+        /* -moz-outline-style: none; */
+      }
+      
+      input[type="text"],
+      input[type="password"] {
+        border: 1px solid #bbb;
+        padding: 0 0 0 10px;
+        font-size: 14px;
+        &:focus {
+          border: 1px solid #3498db;
+        }
+      }
+      
+      a {
+        text-align: center;
+        font-size: 10px;
+        color: #3498db;
+        
+        p{
+          padding-bottom: 10px;
+        }
+        
+      }
+      
+      button {
+        background: #e74c3c;
+        border:none;
+        color: white;
+        font-size: 18px;
+        font-weight: 200;
+        cursor: pointer;
+        transition: box-shadow .4s ease;
+        
+        &:hover {
+          box-shadow: 1px 1px 5px #555;  
+        }
+          
+        &:active {
+            box-shadow: 1px 1px 7px #222;  
+        }
+        
+      }
+      
+    }
+    
+    &:after{
+    content:'';
+    position:absolute;
+    top: 0;
+    left: 0;
+    right: 0;    
+    background:-webkit-linear-gradient(left,               
+        #27ae60 0%, #27ae60 20%, 
+        #8e44ad 20%, #8e44ad 40%,
+        #3498db 40%, #3498db 60%,
+        #e74c3c 60%, #e74c3c 80%,
+        #f1c40f 80%, #f1c40f 100%
+        );
+       background:-moz-linear-gradient(left,               
+        #27ae60 0%, #27ae60 20%, 
+        #8e44ad 20%, #8e44ad 40%,
+        #3498db 40%, #3498db 60%,
+        #e74c3c 60%, #e74c3c 80%,
+        #f1c40f 80%, #f1c40f 100%
+        );
+      height: 5px;
+      border-radius: 5px 5px 0 0;
+  }
+    
+    margin-top: 10%;
+    margin-bottom: 10%;
+  }
+  
+}
   
 
-  
+/* Alerts */
+
+
+
+.demo-preview {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  width: 70%;
+  margin: auto;
+  text-align: center;
+}
+
+.alert {
+  padding: .7143rem 1.071rem;
+  margin-bottom: 1.429rem;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  color: #FFF
+}
+
+.alert.alert-square {
+  border-radius: 0
+}
+
+.alert .close {
+  position: relative
+}
+
+.alert.alert-dismissable,
+.alert.alert-dismissible {
+  padding-right: 2.5rem
+}
+
+.alert.alert-dismissable .close,
+.alert.alert-dismissible .close {
+  top: -2px;
+  right: -20px;
+  color: inherit
+}
+
+.alert.alert-primary {
+  background-color: #2196F3;
+  border-color: #2196F3
+}
+
+.alert.alert-secondary {
+  background-color: #323a45;
+  border-color: #323a45
+}
+
+.alert.alert-success {
+  background-color: #64DD17;
+  border-color: #64DD17
+}
+
+.alert.alert-info {
+  background-color: #29B6F6;
+  border-color: #29B6F6
+}
+
+.alert.alert-warning {
+  background-color: #FFD600;
+  border-color: #FFD600
+}
+
+.alert.alert-danger {
+  background-color: #ef1c1c;
+  border-color: #EF5350
+}
+
+/* Grid for sellerPage */
+
+/* .grid-container {
+  display: grid;
+  grid-template: 150px / auto auto auto auto auto auto;
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+} */
+
+table {border-collapse: collapse; font-family: helvetica}
+
+td, th {
+      border:  1px solid;
+      padding: 10px;
+      min-width: 200px;
+      background: white;
+      box-sizing: border-box;
+      text-align: left;
+}
+.table-container {
+  position: relative;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  /* max-height:  300px; */
+  /* width: 500px; */
+  /* overflow: scroll; */
+}
+
+thead th {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: hsl(20, 50%, 70%);
+}
+
+/* thead th:first-child {
+  left: 0;
+  z-index: 3;
+} */
+
+/* tbody {
+  overflow: scroll;
+  height: 200px;
+} */
+
+/* MAKE LEFT COLUMN FIXEZ */
+/* tr > :first-child {
+  position: -webkit-sticky;
+  position: sticky; 
+  background: hsl(180, 50%, 70%);
+  left: 0; 
+} */
+/* don't do this */
+/* tr > :first-child {
+  box-shadow: inset 0px 1px black;
+} */
+
+/* For edit */
+
+form.edit {
+  display: block;
+  align-items: center;
+  margin: auto;
+}

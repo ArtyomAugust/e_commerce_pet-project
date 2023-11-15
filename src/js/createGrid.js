@@ -1,4 +1,4 @@
-function createGrid(data) {
+function createGridFHome(data) {
 
     const newData = data;
     let grid = document.querySelector("#demoB");
@@ -36,31 +36,63 @@ function createGrid(data) {
                 <span class="product-catagory">${category}</span>
                 <h4><a href="">${label}</a></h4>
                 <p>${description}</p>
-            `;
+                `;
 
             if (discount) {
-                newCards.innerHTML += `
-                <div class="product-price"><small>${price}</small>${discount}</div>
+                newCards.innerHTML += `<div class="product-bottom-details">
+                <div class="product-price"><small>${price}</small>${discount} &euro;</div>
                         <div class="product-links">
-                            <a href=""><i class="bi bi-heart"></i></a>
-                            <a href=""><i class="bi bi-bag"></i></a>
+                            <a href=""><i class="bi bi-heart-fill"></i></a>
+                            <a href=""><i class="bi bi-cart-fill"></i></a>
                         </div>
                     </div>
-                </div>
-                 `;
+                </div>`;
             } else {
-                newCards.innerHTML += `
-                <div class="product-price">${price}</div>
+                newCards.innerHTML += `<div class="product-bottom-details">
+                <div class="product-price">${price} &euro;</div>
                         <div class="product-links">
-                            <a href=""><i class="bi bi-heart"></i></a>
-                            <a href=""><i class="bi bi-bag"></i></a>
+                            <a href=""><i class="bi bi-heart-fill"></i></a>
+                            <a href=""><i class="bi bi-cart-fill"></i></i></a>
                         </div>
                     </div>
-                </div>
-                 `;
+                </div>`;
             }
         grid.append(newCards);        
     });
 }
 
-export default createGrid;
+function createGridFSeller(data) {
+
+    const newData = data;
+    let tbody = document.querySelector("tbody");
+
+    newData.forEach(({
+        id,
+        label, 
+        description, 
+        photo_name,
+        category,
+        price,
+        discount,
+        uploaded
+        }) => {
+        const newCards = document.createElement("tr");
+                // newCards.classList.add("grid-container");
+            
+                newCards.innerHTML = `
+                    <td>${label}</td>
+                    <td>${description}</td>
+                    <td>${photo_name}</td>
+                    <td>${category}</td>
+                    <td>${price}</td>
+                    <td>${discount}</td>
+                    <td>${uploaded}</td>
+                    <td><a href="/pet_project_artjoms_ustinovs/sellerpage?edit_id=${id}&/edit/">edit</a></td>
+                    <td><a href="/pet_project_artjoms_ustinovs/sellerpage?delete_id=${id}$/">delete</a></td>
+                    `;
+
+        tbody.append(newCards);        
+    });
+}
+
+export {createGridFHome, createGridFSeller};

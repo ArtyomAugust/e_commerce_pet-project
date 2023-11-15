@@ -98,7 +98,7 @@ class DB implements \Iterator
         return $this->record !== FALSE;
     }
 
-    function get_record(string $sql, array $params = null)
+    function get_record(string $sql, $params = null)
     {
         $this->record = FALSE;
         $this->run($sql, $params);

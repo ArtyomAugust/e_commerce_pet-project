@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="style.css">
+    <link type="text/css" rel="stylesheet" href="../style.css">
 </head>
 
 <body>
@@ -25,10 +25,10 @@
             </button>
             <div id="navbar-menu" aria-labelledby="navbar-toggle">
                 <ul class="navbar-links">
-                    <li class="navbar-item"><a class="navbar-link" href="login">Login</a></li>
-                    <li class="navbar-item"><a class="navbar-link" href="about">About</a></li>
-                    <li class="navbar-item"><a class="navbar-link" href="careers">Careers</a></li>
-                    <li class="navbar-item"><a class="navbar-link" href="contact">Contact</a></li>
+                    <li class="navbar-item"><a class="navbar-link" href="/pet_project_artjoms_ustinovs/logout">Logout</a></li>
+                    <li class="navbar-item"><a class="navbar-link" href="/pet_project_artjoms_ustinovssellerpage/crnewprt/">Creat product</a>
+                    </li>
+                    <li class="navbar-item"><a class="navbar-link" href="/pet_project_artjoms_ustinovs/contact">Contact</a></li>
                 </ul>
             </div>
         </nav>
