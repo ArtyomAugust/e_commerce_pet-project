@@ -838,7 +838,10 @@ thead th {
 /* For edit */
 
 form.edit {
-  display: block;
   align-items: center;
   margin: auto;
+  display: grid;
+  width: fit-content;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }

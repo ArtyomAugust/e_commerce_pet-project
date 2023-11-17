@@ -13,7 +13,7 @@
 
     <header id="navbar">
         <nav class="navbar-container container">
-            <a href="home" class="home-link">
+            <a href="/pet_project/" class="home-link">
                 <div class="navbar-logo"></div>
                 Website Name
             </a>
@@ -25,10 +25,10 @@
             </button>
             <div id="navbar-menu" aria-labelledby="navbar-toggle">
                 <ul class="navbar-links">
-                    <li class="navbar-item"><a class="navbar-link" href="login">Login</a></li>
-                    <li class="navbar-item"><a class="navbar-link" href="about">About</a></li>
-                    <li class="navbar-item"><a class="navbar-link" href="careers">Careers</a></li>
-                    <li class="navbar-item"><a class="navbar-link" href="contact">Contact</a></li>
+                    <li class="navbar-item"><a class="navbar-link" href="/pet_project/login">Login</a></li>
+                    <li class="navbar-item"><a class="navbar-link" href="/pet_project/about">About</a></li>
+                    <li class="navbar-item"><a class="navbar-link" href="/pet_project/careers">Careers</a></li>
+                    <li class="navbar-item"><a class="navbar-link" href="/pet_project/contact">Contact</a></li>
                 </ul>
             </div>
         </nav>

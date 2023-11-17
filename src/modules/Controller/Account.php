@@ -66,41 +66,78 @@ class Account extends BaseController
 
 
         $connect->run($sql);
-        // $products = [...$connect];
 
         return $this->render([...$connect]);
 
     }
 
-    function edit() {
+    function edit()
+    {
         ob_start();
         session_start();
 
         $connect = new DB();
         $id = $_GET["edit_id"];
-        $date = date("Y-m-d H:i:s");
+        $date = "\"" . date("Y-m-d H:i:s") . "\"";
 
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $sql = "UPDATE products SET 
-                            label=,
-                            description=,
-                            photo_name=,
-                            category=,
-                            price=,
-                            discount=,
-                            uploaded = $date,
-                            WHERE id = $id";
-            
+
+            $sql = "SELECT * FROM categories";
+            $connect->run($sql);
+            $result = [...$connect];
+
+
+            $post = $_POST;
+            var_dump($post);
+            // foreach ($post as $key => $value) {
+            //     $post[$key] = Gaurd::checkStrictText($value);
+            // }
+            $makesql = '';
+            foreach ($post as $key => $value) {
+                foreach ($result as $key2 => $value2) {
+                    if ($value[0] === $value2['name_category']) {
+                        $value[0] = $value2['id'];
+                    }
+                }
+                if (is_array($value)) {
+                    $makesql .= 'category_id = ' .  $value[0] . ',';
+                    continue;
+                }
+
+                if ('description' === $key) {
+                    $makesql .= $key . ' = ' . "\"$value\"" . ',';
+                    continue;
+                }
+
+                if ('label' === $key) {
+                    $makesql .= $key . ' = ' . "\"$value\"" . ',';
+                    continue;
+                }
+
+                $makesql .= " $key = $value, ";
+            }
+
+            $sql = "UPDATE  products SET " . $makesql .
+                "uploaded = $date WHERE id = $id";
+            $connect->run($sql);
+
         }
 
-        
+
 
         $sql = "SELECT * FROM products WHERE id = $id";
-        return $connect->get_record($sql);
+        $result = $connect->get_record($sql);
+
+        $category = '';
+        $sqll = "SELECT * FROM categories";
+        $connect->run($sqll);
+        $category = [...$connect];
+        return ['result' => $result, 'category' => $category];
     }
 
-    function delete() {
-        
+    function delete()
+    {
+
     }
 }
