@@ -12,6 +12,8 @@ $product = new Product();
 $account = new Account();
 
 
+$edit_id = '';
+$delete_id = '';
 $request = $_GET['route'];
 if (strlen($request) === 0) {
     $request .= '';
@@ -20,6 +22,10 @@ if (strlen($request) === 0) {
 if (!empty($_GET['edit_id'])) {
     $edit_id = $_GET['edit_id'];
     $request .= '?edit_id=' . $edit_id;
+}
+if (!empty($_GET['delete_id'])) {
+    $delete_id = $_GET['delete_id'];
+    $request .= '?delete_id=' . $delete_id;
 }
 
 
@@ -35,22 +41,28 @@ switch ($request) {
         $account->login();
         require_once($base_path . 'src\modules\view\login.php');
         break;
-    case 'sellerpage/':
+    case 'sellerpage':
         $context = $account->show();
         require_once($base_path . 'src\modules\view\sellerPage.php');
         break;
-    case 'sellerpage' . '/edit?edit_id=' . $edit_id:
+    case (isset($edit_id)) ? 'sellerpage' . '/edit?edit_id=' . $edit_id : '':
         $ready = $account->edit();
         extract($ready);
         require_once($base_path . 'src\modules\view\edit.php');
         break;
-    case 'sellerpage/crnewprt/':
-        // $account->show();
-        require_once($base_path . 'src\modules\view\.php');
+    case (isset($delete_id)) ? 'sellerpage' . '?delete_id=' . $delete_id : '':
+        $context = $account->delete();
+        require_once($base_path . 'src\modules\view\sellerPage.php');
+        break;
+    case 'sellerpage/crtnewprt':
+        $ready = $account->create();
+        extract($ready);
+        require_once($base_path . 'src\modules\view\crtNewPrt.php');
         break;
     default:
         echo $request . "\r\n";
-        // echo 'sellerpage' . '/edit?edit_id=' . $edit_id . '/';
+        // echo $_GET['delete_id'];
+        // echo (isset($delete_id)) ? $delete_id . 'sellerpage' . '/delete_id=' : '';
         require_once($base_path . 'src\modules\view\404.php');
         break;
 }

@@ -1,5 +1,7 @@
 <?php include($base_path . 'src\\modules\\view\\__headerForSeller.ini.php'); ?>
-<h1>Seller: <?php echo $_SESSION['user_name'] ?></h1>
+<h1>Seller:
+    <?php echo $_SESSION['user_name'] ?>
+</h1>
 <div class="table-container">
     <table class="fixed-table">
         <thead>
@@ -20,7 +22,7 @@
 </div>
 
 <script type="module">
-    import { createGridFSeller } from "../src/js/createGrid.js";
+    import { createGridFSeller } from "./src/js/createGrid.js";
 
     const data = <?php echo $context ?>;
 

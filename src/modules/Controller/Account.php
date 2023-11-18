@@ -32,7 +32,8 @@ class Account extends BaseController
 
 
             $valid = Gaurd::password_verify($password, $hash['password']);
-            return ($valid) ? header('Location: sellerpage/') : $error;
+            $_SESSION['user_id'] = $hash['id'];
+            return ($valid) ? header('Location: sellerpage') : $error;
 
         }
 
@@ -42,7 +43,9 @@ class Account extends BaseController
     function show()
     {
         ob_start();
-        session_start();
+        if (session_status() != PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         $connect = new DB();
 
 
@@ -101,7 +104,7 @@ class Account extends BaseController
                     }
                 }
                 if (is_array($value)) {
-                    $makesql .= 'category_id = ' .  $value[0] . ',';
+                    $makesql .= 'category_id = ' . $value[0] . ',';
                     continue;
                 }
 
@@ -136,8 +139,93 @@ class Account extends BaseController
         return ['result' => $result, 'category' => $category];
     }
 
+    function create()
+    {
+        ob_start();
+        session_start();
+
+        $connect = new DB();
+        $values = [];
+        $makesql = '';
+        $values[':user_id'] = $_SESSION['user_id'];
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $post = $_POST;
+            foreach ($post as $key => $value) {
+                if (is_array($value)) {
+                    $values[":category_id"] = (integer) $value[0];
+                    $makesql .= ":category_id";
+                    continue;
+                }
+                if ($key === 'price') {
+                    $values[':' . $key] = (double) $value;
+                    $makesql .= ":$key, ";
+                    continue;
+                }
+
+                if ($key === 'discount') {
+                    $values[':' . $key] = (double) $value;
+                    $makesql .= ":$key, ";
+                    continue;
+                }
+
+                $makesql .= ":$key, ";
+                $values[':' . $key] = $value;
+            }
+
+            $sql = "INSERT INTO products (user_id, label, description, price, discount," .
+                "category_id) VALUES (:user_id, $makesql)";
+
+            $connect->run($sql, $values);
+
+        }
+
+        $sql = "SELECT * FROM categories";
+        $connect->run($sql);
+        $category = [...$connect];
+        return ['category' => $category];
+
+
+    }
+
     function delete()
     {
+        // if (session_status() != PHP_SESSION_ACTIVE){session_start();}
+        $connect = new DB();
+
+
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            ob_start();
+            session_start();
+            $delete = $_GET['delete_id'];
+
+
+            $sql = "DELETE FROM products where id = $delete";
+            $connect->run($sql);
+
+            $params = $_SESSION['user_name'];
+            $sql = "SELECT id, user FROM users WHERE user = $params";
+            $user_name = $connect->get_record($sql);
+
+            $params = $user_name['id'];
+            $sql = "SELECT  products.id as id,
+                            products.label as label, 
+                            products.photo_name as photo_name, 
+                            products.video_name as video_name, 
+                            products.description as description, 
+                            products.price as price,
+                            products.discount as discount,
+                            products.uploaded as uploaded,
+                            categories.name_category as category
+                            FROM products 
+                            INNER JOIN categories ON categories.id=products.category_id
+                            WHERE user_id = $params";
+
+
+            $connect->run($sql);
+
+            return $this->render([...$connect]);
+        }
+
 
     }
 }

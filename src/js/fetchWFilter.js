@@ -31,14 +31,14 @@ function fetchWFilter(dataFServe) {
                         console.log(result, 'result');
                         
                     }
-                    createGrid(result);
+                    createGridFHome(result);
                 }
                 else {
                     let result = [];
                     const clusterFFilterResult = clusterFFilter.filter((item) => item !== checkbox.value);
                     clusterFFilter = clusterFFilterResult;
                     if (clusterFFilter.length === 0) {
-                        createGrid(dataFServe);
+                        createGridFHome(dataFServe);
                     } else {
                         for (const iterator of clusterFFilterResult) {
                             function filterByCategory(item) {
@@ -53,7 +53,7 @@ function fetchWFilter(dataFServe) {
                             console.log(result, 'result');
                     
                         }
-                        createGrid(result);
+                        createGridFHome(result);
                     }
                 }
             });
