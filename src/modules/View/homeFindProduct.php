@@ -42,12 +42,16 @@
 
   console.log(fromInput.value.length);
 
-  if (fromInput.value.length == 0) {
-    if (dataFPHP !== 0) {
-      filter(dataFPHP);
-      createGridFHome(dataFPHP);
-      fetchWFilter(dataFPHP);
-    }
+  if (fromInput.value.length !== 0) {
+
+    filter(dataFPHP);
+    createGridFHome(dataFPHP);
+    fetchWFilter(dataFPHP);
+
+  }
+
+  if (fromInput.value.length === 0) {
+    window.location.href = '/pet-project/';
   }
 
 </script>

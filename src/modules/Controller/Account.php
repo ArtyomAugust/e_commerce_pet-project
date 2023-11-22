@@ -23,18 +23,31 @@ class Account extends BaseController
             $_SESSION['user_name'] = $username;
 
             $connect = new DB();
-            $params = $_SESSION['user_name'];
-            $sql = "SELECT id, password, user FROM users WHERE user = $params";
+            $sql = "SELECT id, user FROM users";
+            $connect->run($sql);
+            $users = [...$connect];
+            $param = $_SESSION['user_name'];
+            foreach ($users as $value) {
+                if ($param === $value) {
+                    $param = $value;
+                    break;
+                }
+            }
+
+            if (empty($param)) {
+                return $error;
+            }
+
+            $sql = "SELECT id, password, user FROM users WHERE user = $param";
             $hash = $connect->get_record($sql);
-
-
-
 
 
             $valid = Gaurd::password_verify($password, $hash['password']);
             $_SESSION['user_id'] = $hash['id'];
-            return ($valid) ? header('Location: sellerpage') : $error;
-
+            if (!$valid) {
+                return $error;
+            }
+            return header('Location: sellerpage');
         }
 
         session_destroy();
@@ -74,6 +87,13 @@ class Account extends BaseController
 
     }
 
+    function logout()
+    {
+        session_destroy();
+
+        header("Location: home");
+    }
+
     function edit()
     {
         ob_start();
@@ -82,9 +102,72 @@ class Account extends BaseController
         $connect = new DB();
         $id = $_GET["edit_id"];
         $date = "\"" . date("Y-m-d H:i:s") . "\"";
-
+        $photo_name = '';
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+
+            // // Get reference to uploaded image
+            // $image_file = $_FILES["photo_name"];
+
+            // // Exit if no file uploaded
+            // if (!isset($image_file)) {
+            //     die('No file uploaded.');
+            // }
+
+            // // Exit if is not a valid image file
+            // $image_type = exif_imagetype($image_file["tmp_name"]);
+            // if (!$image_type) {
+            //     die('Uploaded file is not an image.');
+            // }
+
+            // // Move the temp image file to the images/ directory
+            // move_uploaded_file(
+            //     // Temp image location
+            //     $image_file["tmp_name"],
+
+            //     // New image location
+            //     __DIR__ . "/images/" . $image_file["name"]
+            // );
+
+            // Check if file was uploaded without errors
+
+            if (isset($_FILES["anyfile"]) && $_FILES["anyfile"]["error"] == 0) {
+
+                $allowed = array("jpg" => "jpg", "jpeg" => "jpeg", "gif" => "gif", "png" => "png");
+                $filename = $_FILES["anyfile"]["name"];
+                $filetype = $_FILES["anyfile"]["type"];
+
+                // Validate file extension
+                $ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+                if (!array_key_exists($ext, $allowed))
+                    die("Error: Please select a valid file format.");
+                // Validate type of the file
+                if (in_array($filetype, $allowed)) {
+                    // Check whether file exists before uploading it
+                    if (file_exists("upload/" . $filename)) {
+                        echo $filename . " is already exists.";
+                    } else {
+                        if (move_uploaded_file($_FILES["anyfile"]["tmp_name"], "\src\pictures\\" . $filename)) {
+                            // $sql="INSERT INTO images(file,type,size) VALUES('$filename','$filetype')";
+
+                            // mysqli_query($conn,$sql);
+
+                            $photo_name = $_FILES["anyfile"]["name"] . '.' . $_FILES["anyfile"]["type"];
+
+                            echo "Your file was uploaded successfully.";
+                        } else {
+                            echo "File is not uploaded";
+                        }
+                    }
+
+                } else {
+                    echo "Error: There was a problem uploading your file. Please try again.";
+                }
+            } else {
+                echo "Error: " . $_FILES["anyfile"]["error"];
+            }
 
             $sql = "SELECT * FROM categories";
             $connect->run($sql);
@@ -92,12 +175,19 @@ class Account extends BaseController
 
 
             $post = $_POST;
-            var_dump($post);
-            // foreach ($post as $key => $value) {
-            //     $post[$key] = Gaurd::checkStrictText($value);
-            // }
+
             $makesql = '';
+            $postChecked = [];
+
             foreach ($post as $key => $value) {
+                $postChecked[] = Gaurd::checkStrictText($value);
+                if (is_array($value)) {
+                    $postChecked["category"] = $value[0];
+                    continue;
+                }
+            }
+
+            foreach ($postChecked as $key => $value) {
                 foreach ($result as $key2 => $value2) {
                     if ($value[0] === $value2['name_category']) {
                         $value[0] = $value2['id'];
@@ -121,6 +211,9 @@ class Account extends BaseController
                 $makesql .= " $key = $value, ";
             }
 
+            $makesql .= ":photo_name = $photo_name";
+
+
             $sql = "UPDATE  products SET " . $makesql .
                 "uploaded = $date WHERE id = $id";
             $connect->run($sql);
@@ -141,6 +234,7 @@ class Account extends BaseController
 
     function create()
     {
+        global $base_path;
         ob_start();
         session_start();
 
@@ -148,11 +242,60 @@ class Account extends BaseController
         $values = [];
         $makesql = '';
         $values[':user_id'] = $_SESSION['user_id'];
+        $photo_name = "";
+        $postChecked = [];
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $post = $_POST;
+
             foreach ($post as $key => $value) {
                 if (is_array($value)) {
-                    $values[":category_id"] = (integer) $value[0];
+                    $postChecked["category_id"] = (int) $value[0];
+                    continue;
+                }
+                $postChecked[$key] = Gaurd::checkStrictText($value);
+            }
+
+            if (isset($_FILES["photo_name"]) && $_FILES["photo_name"]["error"] === 0) {
+
+                $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
+                $filename = $_FILES["photo_name"]["name"];
+                $filetype = $_FILES["photo_name"]["type"];
+
+                // Validate file extension
+                $ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+                if (!array_key_exists($ext, $allowed))
+                    die("Error: Please select a valid file format.");
+                // Validate type of the file
+                if (in_array($filetype, $allowed)) {
+                    // Check whether file exists before uploading it
+                    if (file_exists($base_path . "src\pictures\\" . $filename)) {
+                        $photo_name = $filename;
+                        echo $filename . " is already exists.";
+                    } else {
+                        if (move_uploaded_file($_FILES["photo_name"]["tmp_name"], $base_path . "src\pictures\\" . $filename)) {
+                            // $sql="INSERT INTO images(file,type,size) VALUES('$filename','$filetype')";
+
+                            // mysqli_query($conn,$sql);
+
+                            $photo_name = $filename;
+                            echo "Your file was uploaded successfully.";
+                        } else {
+                            echo "File is not uploaded";
+                        }
+                    }
+
+                } else {
+                    echo "Error: There was a problem uploading your file. Please try again.";
+                }
+            } else {
+                echo "Error: " . $_FILES["photo_name"]["error"];
+            }
+
+            foreach ($postChecked as $key => $value) {
+                if ($key === 'category_id') {
+                    $values[":category_id"] = (integer) $value;
                     $makesql .= ":category_id";
                     continue;
                 }
@@ -172,11 +315,15 @@ class Account extends BaseController
                 $values[':' . $key] = $value;
             }
 
+            $makesql .= ",:photo_name";
+            $values[":photo_name"] = $photo_name;
+
             $sql = "INSERT INTO products (user_id, label, description, price, discount," .
-                "category_id) VALUES (:user_id, $makesql)";
+                " category_id, photo_name) VALUES (:user_id, $makesql)";
 
             $connect->run($sql, $values);
 
+            header('Location: /pet_project/sellerpage');
         }
 
         $sql = "SELECT * FROM categories";

@@ -414,6 +414,7 @@ a
     text-align: left;
     font: bold 16px sans-serif;
     padding: 55px 50px;
+    margin-top: 10%;
   }
   
   .footer-distributed .footer-left,
@@ -716,7 +717,7 @@ html {
   margin-bottom: 1.429rem;
   border-radius: 2px;
   border: 1px solid transparent;
-  color: #FFF
+  color: #FFF;
 }
 
 .alert.alert-square {
@@ -724,19 +725,26 @@ html {
 }
 
 .alert .close {
-  position: relative
+  position: relative;
 }
 
 .alert.alert-dismissable,
 .alert.alert-dismissible {
-  padding-right: 2.5rem
+  padding-right: 2.5rem;
 }
 
 .alert.alert-dismissable .close,
 .alert.alert-dismissible .close {
-  top: -2px;
-  right: -20px;
-  color: inherit
+  /*! top: -2px; */
+  right: 0px;
+  color: inherit;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
 
 .alert.alert-primary {
@@ -766,7 +774,8 @@ html {
 
 .alert.alert-danger {
   background-color: #ef1c1c;
-  border-color: #EF5350
+  border-color: #EF5350;
+  padding-left: 38%;
 }
 
 /* Grid for sellerPage */
@@ -844,4 +853,51 @@ form.edit {
   width: fit-content;
   margin-top: 5%;
   margin-bottom: 5%;
+}
+
+/* links for sellerPage's edit*/
+
+a.sellerPageEdit {
+  box-shadow: inset 0 0 0 0 #cfd654;
+  color: #cfd654;
+	padding: 0 .25rem;
+	margin: 0 -.25rem;
+  transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+}
+a.sellerPageEdit:hover {
+  color: #fff;
+  box-shadow: inset 200px 0 0 0 #cfd654;;
+}
+
+/* Presentational styles */
+a.sellerPageEdit {
+	color: #cfd654;
+  font-family: 'Poppins', sans-serif;
+  font-size: 19px;
+	font-weight: 700;
+  line-height: 1.5;
+  text-decoration: none;
+}
+/* links for sellerPage's delete*/
+
+a.sellerPageDelete {
+  box-shadow: inset 0 0 0 0 #d30b0b;
+  color: #d30b0b;
+	padding: 0 .25rem;
+	margin: 0 -.25rem;
+  transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+}
+a.sellerPageDelete:hover {
+  color: #fff;
+  box-shadow: inset 200px 0 0 0 #d30b0b;;
+}
+
+/* Presentational styles */
+a.sellerPageDelete {
+	color: #d30b0b;
+  font-family: 'Poppins', sans-serif;
+  font-size: 19px;
+	font-weight: 700;
+  line-height: 1.5;
+  text-decoration: none;
 }

@@ -14,6 +14,7 @@ $account = new Account();
 
 $edit_id = '';
 $delete_id = '';
+$query = '';
 $request = $_GET['route'];
 if (strlen($request) === 0) {
     $request .= '';
@@ -27,6 +28,10 @@ if (!empty($_GET['delete_id'])) {
     $delete_id = $_GET['delete_id'];
     $request .= '?delete_id=' . $delete_id;
 }
+if (!empty($_GET['findproduct'])) {
+    $query = $_GET['findproduct'];
+    $request .= 'home?findproduct=' . $query;
+}
 
 
 switch ($request) {
@@ -34,12 +39,21 @@ switch ($request) {
         $context = $product->show();
         require_once($base_path . 'src\modules\view\home.php');
         break;
+    case (isset($edit_id)) ? 'home?findproduct=' . $query : '':
+        $context = $product->takeFromInput();
+        // echo $queryDB;
+        require_once($base_path . 'src\modules\view\homeFindProduct.php');
+        break;
     case 'about':
         require_once($base_path . 'src\modules\view\about.php');
         break;
     case 'login':
-        $account->login();
+        $error = $account->login();
         require_once($base_path . 'src\modules\view\login.php');
+        break;
+    case 'logout':
+        $account->logout();
+        require_once($base_path . 'src\modules\view\home.php');
         break;
     case 'sellerpage':
         $context = $account->show();

@@ -30,7 +30,7 @@ function createGridFHome(data) {
             }
             newCards.innerHTML += `
             <div class="product-tumb">
-                <img src="${photo_name}" alt="${label}">
+                <img src="/pet_project/src/pictures/${photo_name}" alt="${label}">
             </div>
             <div class="product-details">
                 <span class="product-catagory">${category}</span>
@@ -82,13 +82,13 @@ function createGridFSeller(data) {
                 newCards.innerHTML = `
                     <td>${label}</td>
                     <td>${description}</td>
-                    <td>${photo_name}</td>
+                    <td><img style="width: 200px" src="/pet_project/src/pictures/${photo_name}" alt="${label}"></td>
                     <td>${category}</td>
                     <td>${price}</td>
                     <td>${discount}</td>
                     <td>${uploaded}</td>
-                    <td><a href="/pet_project/sellerpage/edit?edit_id=${id}">edit</a></td>
-                    <td><a href="/pet_project/sellerpage?delete_id=${id}">delete</a></td>
+                    <td><a class="sellerPageEdit" href="/pet_project/sellerpage/edit?edit_id=${id}">edit</a></td>
+                    <td><a class="sellerPageDelete" href="/pet_project/sellerpage?delete_id=${id}">delete</a></td>
                     `;
 
         tbody.append(newCards);        

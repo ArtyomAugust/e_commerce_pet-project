@@ -9,12 +9,6 @@ class Product extends BaseController
 {
     function show()
     {
-        $post = '';
-
-        if (!empty($_POST['findProduct'])) {
-            $post = $_POST['findProduct'];
-            GaurdStrict::checkStrictText($post);
-        }
 
         $sql = "SELECT  products.id as id, 
                         products.label as label, 
@@ -26,27 +20,34 @@ class Product extends BaseController
                         categories.name_category as category 
                         FROM products 
                         INNER JOIN categories ON products.category_id=categories.id 
-                        WHERE label LIKE ? ";
-
-        $params = ['%' . $post . '%'];
+                        ";
 
         $connect = new DB();
-        $connect->run($sql, $params);
+        $connect->run($sql);
         return $this->render([...$connect]);
     }
 
-    function delete()
+    function takeFromInput()
     {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $query = $_GET['findproduct'];
+            $sql = "SELECT  products.id as id, 
+                        products.label as label, 
+                        products.photo_name as photo_name, 
+                        products.description as description, 
+                        products.price as price,
+                        products.discount as discount,
+                        products.hot as hot,
+                        categories.name_category as category 
+                        FROM products 
+                        INNER JOIN categories ON products.category_id=categories.id 
+                        WHERE label LIKE ? ";
 
-    }
+            $params = ['%' . $query . '%'];
 
-    function update()
-    {
-
-    }
-
-    function add()
-    {
-
+            $connect = new DB();
+            $connect->run($sql, $params);
+            return $this->render([...$connect]);
+        }
     }
 }

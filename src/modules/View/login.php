@@ -1,9 +1,10 @@
 <?php include($base_path . 'src\\modules\\view\\__header.inc.php'); ?>
 
 <?php if (!empty($error)): ?>
-    <div class="alert alert-danger alert-dismissable fade in">
-        <button type="button" data-dismiss="alert" aria-label="close" class="close">
-            <span aria-hidden="true">×</span></button>
+    <div class="alert alert-danger alert-dismissable fade in" onclick="this.style.display='none';">
+        <button type=" button" data-dismiss="alert" aria-label="close" class="close">
+            <span aria-hidden="true">×</span>
+        </button>
         <strong>Error!</strong>
         <?= $error['user_name'] . ' or ' . $error['password'] ?>
     </div>

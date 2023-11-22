@@ -7,17 +7,16 @@
         <thead>
             <tr>
                 <th>Label</th>
-                <th>description</th>
-                <th>photo_name</th>
-                <th>category</th>
-                <th>price</th>
-                <th>discount</th>
-                <th>uploaded</th>
+                <th>Description</th>
+                <th>Photo</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Uploaded</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
-
     </table>
 </div>
 
