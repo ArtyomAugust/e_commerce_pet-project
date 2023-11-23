@@ -103,40 +103,24 @@ class Account extends BaseController
         $id = $_GET["edit_id"];
         $date = "\"" . date("Y-m-d H:i:s") . "\"";
         $photo_name = '';
+        $post = [];
+        global $base_path;
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+            foreach ($post as $key => $value) {
+                if (is_array($value)) {
+                    $postChecked["category_id"] = (int) $value[0];
+                    continue;
+                }
+                $postChecked[$key] = Gaurd::checkStrictText($value);
+            }
 
-            // // Get reference to uploaded image
-            // $image_file = $_FILES["photo_name"];
+            if (isset($_FILES["photo_name"]) && $_FILES["photo_name"]["error"] === 0) {
 
-            // // Exit if no file uploaded
-            // if (!isset($image_file)) {
-            //     die('No file uploaded.');
-            // }
-
-            // // Exit if is not a valid image file
-            // $image_type = exif_imagetype($image_file["tmp_name"]);
-            // if (!$image_type) {
-            //     die('Uploaded file is not an image.');
-            // }
-
-            // // Move the temp image file to the images/ directory
-            // move_uploaded_file(
-            //     // Temp image location
-            //     $image_file["tmp_name"],
-
-            //     // New image location
-            //     __DIR__ . "/images/" . $image_file["name"]
-            // );
-
-            // Check if file was uploaded without errors
-
-            if (isset($_FILES["anyfile"]) && $_FILES["anyfile"]["error"] == 0) {
-
-                $allowed = array("jpg" => "jpg", "jpeg" => "jpeg", "gif" => "gif", "png" => "png");
-                $filename = $_FILES["anyfile"]["name"];
-                $filetype = $_FILES["anyfile"]["type"];
+                $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
+                $filename = $_FILES["photo_name"]["name"];
+                $filetype = $_FILES["photo_name"]["type"];
 
                 // Validate file extension
                 $ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -146,16 +130,16 @@ class Account extends BaseController
                 // Validate type of the file
                 if (in_array($filetype, $allowed)) {
                     // Check whether file exists before uploading it
-                    if (file_exists("upload/" . $filename)) {
+                    if (file_exists($base_path . "src\pictures\\" . $filename)) {
+                        $photo_name = $filename;
                         echo $filename . " is already exists.";
                     } else {
-                        if (move_uploaded_file($_FILES["anyfile"]["tmp_name"], "\src\pictures\\" . $filename)) {
+                        if (move_uploaded_file($_FILES["photo_name"]["tmp_name"], $base_path . "src\pictures\\" . $filename)) {
                             // $sql="INSERT INTO images(file,type,size) VALUES('$filename','$filetype')";
 
                             // mysqli_query($conn,$sql);
 
-                            $photo_name = $_FILES["anyfile"]["name"] . '.' . $_FILES["anyfile"]["type"];
-
+                            $photo_name = $filename;
                             echo "Your file was uploaded successfully.";
                         } else {
                             echo "File is not uploaded";
@@ -166,8 +150,9 @@ class Account extends BaseController
                     echo "Error: There was a problem uploading your file. Please try again.";
                 }
             } else {
-                echo "Error: " . $_FILES["anyfile"]["error"];
+                echo "Error: " . $_FILES["photo_name"]["error"];
             }
+
 
             $sql = "SELECT * FROM categories";
             $connect->run($sql);
@@ -182,19 +167,19 @@ class Account extends BaseController
             foreach ($post as $key => $value) {
                 $postChecked[] = Gaurd::checkStrictText($value);
                 if (is_array($value)) {
-                    $postChecked["category"] = $value[0];
+                    $postChecked["category_id"] = $value[0];
                     continue;
                 }
             }
 
             foreach ($postChecked as $key => $value) {
                 foreach ($result as $key2 => $value2) {
-                    if ($value[0] === $value2['name_category']) {
-                        $value[0] = $value2['id'];
+                    if ($value === $value2['name_category']) {
+                        $value = $value2['id'];
                     }
                 }
                 if (is_array($value)) {
-                    $makesql .= 'category_id = ' . $value[0] . ',';
+                    $makesql .= 'category_id = ' . $value . ',';
                     continue;
                 }
 
@@ -214,8 +199,7 @@ class Account extends BaseController
             $makesql .= ":photo_name = $photo_name";
 
 
-            $sql = "UPDATE  products SET " . $makesql .
-                "uploaded = $date WHERE id = $id";
+            $sql = "UPDATE  products SET " . $makesql . "uploaded = $date WHERE id = $id";
             $connect->run($sql);
 
         }
