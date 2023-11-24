@@ -44,7 +44,7 @@
 
     // const delete_id = document.getElementById("delete_id");
     const modal = document.getElementById("myModal");
-    const btns = document.querySelectorAll("#deleteButton");
+    const btns = document.querySelectorAll("#deletePrt");
     const deleteBtn = document.getElementById("deleteBtn");
     const span = document.getElementsByClassName("close")[0];
     const dLabel = document.querySelector("#dLabel");

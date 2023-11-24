@@ -847,12 +847,116 @@ thead th {
 /* For edit */
 
 form.edit {
-  align-items: center;
-  margin: auto;
   display: grid;
-  width: fit-content;
   margin-top: 5%;
   margin-bottom: 5%;
+  width: 40%;
+  margin-left: 30%;
+}
+
+/* crtNewPrt */
+
+
+
+
+form.edit > label {
+  padding-bottom: 6px;
+  font-size: large;
+}
+
+form.edit > input[type=text], select{
+  border: 3px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 30px;
+  padding: 3px;
+  font-size: medium;
+}
+
+form.edit > textarea {
+  height: 300px;
+  border: 3px solid #ccc;
+  border-radius: 4px;
+  height: 300px;
+  padding: 3px;
+  font-size: medium;
+}
+
+
+form.edit div.displayed_photo > input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #084cdf;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+
+form.edit div.displayed_photo > input[type=file] {
+  margin-right: 20px;
+  border: 2px solid;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+  position: absolute;
+  margin-left: 10px;
+}
+
+div.displayed_photo input[type=file]::file-selector-button:hover {
+  background: #0d45a5;
+}
+
+
+form.edit button[type=submit]{
+  margin-top: 16px;
+  appearance: none;
+  backface-visibility: hidden;
+  background-color: #27ae60;
+  border-radius: 8px;
+  border-style: none;
+  box-shadow: rgba(39, 174, 96, .15) 0 4px 9px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter,-apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: normal;
+  line-height: 1.5;
+  outline: none;
+  overflow: hidden;
+  padding: 13px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transform: translate3d(0, 0, 0);
+  transition: all .3s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+form.edit button[type=submit]:hover {
+  background-color: #1e8449;
+  opacity: 1;
+  transform: translateY(0);
+  transition-duration: .35s;
+}
+
+form.edit button[type=submit]:active {
+  transform: translateY(2px);
+  transition-duration: .35s;
+}
+
+form.edit button[type=submit]:hover {
+  box-shadow: rgba(39, 174, 96, .2) 0 6px 12px;
 }
 
 /* links for sellerPage's edit*/
@@ -878,30 +982,29 @@ a.sellerPageEdit {
   line-height: 1.5;
   text-decoration: none;
 }
-/* links for sellerPage's delete*/
 
-a.sellerPageDelete {
-  box-shadow: inset 0 0 0 0 #d30b0b;
-  color: #d30b0b;
-	padding: 0 .25rem;
-	margin: 0 -.25rem;
-  transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
-}
-a.sellerPageDelete:hover {
-  color: #fff;
-  box-shadow: inset 200px 0 0 0 #d30b0b;;
-}
+/* links for edit and create a new product */
 
-/* Presentational styles */
-a.sellerPageDelete {
-	color: #d30b0b;
-  font-family: 'Poppins', sans-serif;
-  font-size: 19px;
-	font-weight: 700;
-  line-height: 1.5;
+a.crtPrt:link {
   text-decoration: none;
+  color: #19508b;
+  margin-left: 40px;
+  font-size: large;
 }
 
+a.crtPrt:visited {
+  text-decoration: none;
+  color: #19508b;
+}
+
+a.crtPrt:hover {
+  text-decoration: underline;
+}
+
+a.crtPrt:active {
+  text-decoration: underline;
+
+}
 
  /* The Modal (background) */
  .modal {
@@ -987,3 +1090,47 @@ button.deleteBtn:active {
   box-shadow: none;
   transform: translateY(0);
 }
+
+button#deletePrt {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #e60b0b;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+button#deletePrt:disabled {
+  pointer-events: none;
+}
+
+button#deletePrt:hover {
+  color: #fff;
+  background-color: #e60b0b;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+button#deleteBtn:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+

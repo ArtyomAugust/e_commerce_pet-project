@@ -88,7 +88,7 @@ function createGridFSeller(data) {
                     <td>${discount}</td>
                     <td>${uploaded}</td>
                     <td><a class="sellerPageEdit" href="/pet_project/sellerpage/edit?edit_id=${id}">EDIT</a></td>
-                    <td><button class="/pet_project/sellerpage?delete_id=${id}" id="deleteButton">DELETE</button></td>
+                    <td><button class="/pet_project/sellerpage?delete_id=${id}" id="deletePrt">DELETE</button></td>
                     `;
 
         tbody.append(newCards);        
