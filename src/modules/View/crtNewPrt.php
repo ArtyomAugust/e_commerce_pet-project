@@ -13,9 +13,9 @@
     <div class="displayed_photo" name="displayed_photo">
         <img style="border: 3px solid #ccc;" id="photo_name"
             src="https://cdn.swisscows.com/image?url=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.9hetfdrodOfI9KzE_g_dDAAAAA%26pid%3DApi"
-            alt="" width="300px" height="300px">
+            alt="" width="500px" height="500px">
 
-        <input type="file" id="photo_name_input" name="photo_name">
+        <input type="file" id="photo_name_input" name="photo_name" required>
     </div>
 
 

@@ -12,6 +12,13 @@ class Check
         return $inputText;
     }
 
+    public static function checkText(string $inputText): string
+    {
+        $inputText = htmlentities($inputText); //replace html tags
+        $inputText = stripslashes($inputText); //Un-quotes a quoted string. 
+        return $inputText;
+    }
+
     static function password_encrypt(string $password): string
     {
         $password = strip_tags($password);

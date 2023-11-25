@@ -61,14 +61,13 @@
             e.preventDefault();
             modal.style.display = "block";
             let className = e.currentTarget.className;
-            let char = className.charAt(34);
-
+            let char = className.match(/\d+/);
 
             for (const iterator of data) {
                 // console.log(iterator, 'data');
                 const { id, label } = iterator;
                 // console.log(id, char);
-                if (id == char) {
+                if (id == char[0]) {
                     dLabel.innerHTML = String(label);
                 }
             }

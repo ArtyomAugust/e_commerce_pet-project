@@ -108,13 +108,7 @@ class Account extends BaseController
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            foreach ($post as $key => $value) {
-                if (is_array($value)) {
-                    $postChecked["category_id"] = (int) $value[0];
-                    continue;
-                }
-                $postChecked[$key] = Gaurd::checkStrictText($value);
-            }
+            $post = $_POST;
 
             if (isset($_FILES["photo_name"]) && $_FILES["photo_name"]["error"] === 0) {
 
@@ -149,6 +143,8 @@ class Account extends BaseController
                 } else {
                     echo "Error: There was a problem uploading your file. Please try again.";
                 }
+            } elseif (!empty($post['photo_name'])) {
+                $photo_name = $post['photo_name'];
             } else {
                 echo "Error: " . $_FILES["photo_name"]["error"];
             }
@@ -159,32 +155,38 @@ class Account extends BaseController
             $result = [...$connect];
 
 
-            $post = $_POST;
-
             $makesql = '';
             $postChecked = [];
 
             foreach ($post as $key => $value) {
-                $postChecked[] = Gaurd::checkStrictText($value);
                 if (is_array($value)) {
-                    $postChecked["category_id"] = $value[0];
+                    $postChecked["name_category"] = $value[0];
                     continue;
                 }
+                $postChecked[$key] = Gaurd::checkText($value);
             }
-
+            var_dump($postChecked);
             foreach ($postChecked as $key => $value) {
                 foreach ($result as $key2 => $value2) {
                     if ($value === $value2['name_category']) {
-                        $value = $value2['id'];
+
+                        $makesql .= "category_id = " . $value2['id'];
                     }
                 }
-                if (is_array($value)) {
-                    $makesql .= 'category_id = ' . $value . ',';
+                if ('name_category' === $key) {
                     continue;
                 }
 
                 if ('description' === $key) {
                     $makesql .= $key . ' = ' . "\"$value\"" . ',';
+                    continue;
+                }
+
+                if ('photo_name' === $key) {
+                    continue;
+                }
+
+                if ('discount' === $key and empty($value)) {
                     continue;
                 }
 
@@ -196,11 +198,12 @@ class Account extends BaseController
                 $makesql .= " $key = $value, ";
             }
 
-            $makesql .= ":photo_name = $photo_name";
+            $makesql .= (isset($photo_name)) ? " ,photo_name = \"$photo_name\"" : '';
 
 
-            $sql = "UPDATE  products SET " . $makesql . "uploaded = $date WHERE id = $id";
+            $sql = "UPDATE  products SET " . $makesql . " ,uploaded = $date WHERE id = $id";
             $connect->run($sql);
+            header('Location: /pet_project/sellerpage');
 
         }
 
@@ -237,7 +240,7 @@ class Account extends BaseController
                     $postChecked["category_id"] = (int) $value[0];
                     continue;
                 }
-                $postChecked[$key] = Gaurd::checkStrictText($value);
+                $postChecked[$key] = Gaurd::checkText($value);
             }
 
             if (isset($_FILES["photo_name"]) && $_FILES["photo_name"]["error"] === 0) {
