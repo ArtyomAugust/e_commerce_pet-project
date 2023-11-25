@@ -4,7 +4,7 @@ In the Pet-project you can create product on "create a product" page, on "all pr
 
 On the main page you can search for product and filter by its category.
 
-To login you have to use: in user field - "user" and password field - "123456".
+Rename a main folder as "pet_project". To login you have to use: in user field - "user" and password field - "123456".
 
 the path for a route: localhost/pet_project/; 
 "baza" is Database.
